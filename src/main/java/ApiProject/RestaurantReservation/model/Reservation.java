@@ -21,10 +21,10 @@ import java.util.UUID;
 public class Reservation {
     @Id @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+    private int code;
     private String clientName;
     private LocalDate date;
     private LocalTime time;
-    private String type;
 
     @ManyToOne
     @JoinColumn(name = "restaurant_table_id")
@@ -35,11 +35,11 @@ public class Reservation {
      * @param data data tranrfer operation that will transfer the requested data to the entity
      * @param table related class entity in a many-to-one relationship
      */
-    public Reservation(ReservationResquestDTO data, RestaurantTable table){
+    public Reservation(ReservationResquestDTO data, RestaurantTable table, int code){
         this.clientName = data.clientName();
         this.date = data.date();
         this.time = data.time();
-        this.type = data.type();
         this.restaurantTable = table;
+        this.code = code;
     }
 }
