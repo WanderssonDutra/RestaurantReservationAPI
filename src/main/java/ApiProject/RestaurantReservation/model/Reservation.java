@@ -1,4 +1,4 @@
-package ApiProject.RestaurantReservation.entity;
+package ApiProject.RestaurantReservation.model;
 
 import ApiProject.RestaurantReservation.dto.reservation.ReservationResquestDTO;
 import jakarta.persistence.*;
@@ -13,17 +13,29 @@ import java.util.UUID;
  * Description: Entity class to persist reservation datas
  */
 @Entity(name = "reservation")
+@Table(name = "reservation")
 @Getter
 @Setter
 @EqualsAndHashCode(of = "id")
 @NoArgsConstructor
 @AllArgsConstructor
 public class Reservation {
-    @Id @GeneratedValue(strategy = GenerationType.UUID)
+
+    @Column(name = "id")
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+
+    @Column(name = "code", nullable = false)
     private int code;
+
+    @Column(name = "client_name", nullable = false)
     private String clientName;
+
+    @Column(name = "date", nullable = false)
     private LocalDate date;
+
+    @Column(name = "time", nullable = false)
     private LocalTime time;
 
     @ManyToOne

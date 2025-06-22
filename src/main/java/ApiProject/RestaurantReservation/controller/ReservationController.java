@@ -1,15 +1,20 @@
 package ApiProject.RestaurantReservation.controller;
 
+import ApiProject.RestaurantReservation.dto.reservation.ReservationResponseDTO;
 import ApiProject.RestaurantReservation.dto.reservation.ReservationResquestDTO;
 import ApiProject.RestaurantReservation.service.ReservationService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 import java.util.UUID;
 
 /**
  * Author: Wandersson Sousa Dutra
- * Date: 01/06/2025
+ * Date: 06/06/2025
  * Description: Controller of the reservation entity class
  */
 @RestController
@@ -23,8 +28,10 @@ public class ReservationController {
      * @return A ResponseEntity with a list of all reservations
      */
     @GetMapping("/all")
-    public ResponseEntity getAll(){
-        return ResponseEntity.ok(service.allReservations());
+    public ResponseEntity<ReservationResponseDTO> getAll(){
+
+        List<ReservationResponseDTO> allReservations = service.allReservations();
+        return new ResponseEntity(allReservations, HttpStatus.OK);
     }
     /**
      * Description: Request reservations filtered by the table number of a restaurant
@@ -32,8 +39,17 @@ public class ReservationController {
      * restaurant id
      */
     @GetMapping("/tablenumber")
-    public ResponseEntity findByTableNumber(@RequestBody ReservationResquestDTO data){
-        return ResponseEntity.ok(service.AllReservationsByRestaurantandTableNumber(data));
+    public ResponseEntity<ReservationResponseDTO> findByTableNumber(@RequestBody ReservationResquestDTO data){
+
+        List<ReservationResponseDTO> allByRestaurantAndTableNumber = service.
+                                                                     AllReservationsByRestaurantAndTableNumber(data);
+        return new ResponseEntity(allByRestaurantAndTableNumber, HttpStatus.OK);
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<ReservationResponseDTO> getByRestaurantId(@PathVariable UUID id){
+
+        List<ReservationResponseDTO> allByRestaurantId = service.allReservationsByRestaurantId(id);
+        return new ResponseEntity(allByRestaurantId, HttpStatus.OK);
     }
     /**
      * Description: delete the reservation record by the id
@@ -41,9 +57,10 @@ public class ReservationController {
      * @return a ResponseEntity with a http status
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity deleteReservation(@PathVariable UUID id){
-        service.deleteReservation(id);
-        return ResponseEntity.ok("Reservation successfully deleted.");
+    public ResponseEntity<ReservationResponseDTO> deleteReservation(@PathVariable UUID id){
+
+        ReservationResponseDTO responseDTO = service.deleteReservation(id);
+        return  new ResponseEntity("Reservation succesfully deleted: " + responseDTO, HttpStatus.OK);
     }
     /**
      * Description: creates a new reservation record
@@ -52,7 +69,7 @@ public class ReservationController {
      * @return A ResponseEntity with a http status
      */
     @PostMapping("/new")
-    public ResponseEntity newReserve(@RequestBody ReservationResquestDTO data){
+    public ResponseEntity newReservation(@RequestBody @Valid ReservationResquestDTO data){
         service.newReservation(data);
         return ResponseEntity.ok("the reservation was successfully created.");
     }

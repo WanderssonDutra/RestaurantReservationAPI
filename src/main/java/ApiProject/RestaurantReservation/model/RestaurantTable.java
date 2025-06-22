@@ -1,4 +1,4 @@
-package ApiProject.RestaurantReservation.entity;
+package ApiProject.RestaurantReservation.model;
 
 import ApiProject.RestaurantReservation.dto.restaurant_table.RestaurantTableRequestDTO;
 import jakarta.persistence.*;
@@ -17,10 +17,16 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RestaurantTable {
+
+    @Column(name = "id")
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+
+    @Column(name = "table_number", nullable = false)
     private int tableNumber;
+
+    @Column(name = "is_vip", nullable = false)
     Boolean isVip;
 
     @OneToMany(mappedBy = "restaurantTable", cascade = CascadeType.ALL)

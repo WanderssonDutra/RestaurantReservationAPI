@@ -1,4 +1,4 @@
-package ApiProject.RestaurantReservation.entity;
+package ApiProject.RestaurantReservation.model;
 
 import ApiProject.RestaurantReservation.dto.restaurant.RestaurantRequestDTO;
 import jakarta.persistence.*;
@@ -12,16 +12,26 @@ import java.util.UUID;
  * entity class to persist restaurant datas
  */
 @Entity(name = "restaurant")
+@Table(name = "restaurant")
 @Getter
 @Setter
 @EqualsAndHashCode(of="id")
 @NoArgsConstructor
 @AllArgsConstructor
 public class Restaurant {
-    @Id @GeneratedValue(strategy = GenerationType.UUID)
+
+    @Column(name = "id")
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+
+    @Column(name = "cnpj", nullable = false)
     private String cnpj;
+
+    @Column(name = "name", nullable = false)
     private String name;
+
+    @Column(name = "phone_number", nullable = false)
     private String phoneNumber;
 
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)

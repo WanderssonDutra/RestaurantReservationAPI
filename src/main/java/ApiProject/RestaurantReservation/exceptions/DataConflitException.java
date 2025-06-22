@@ -4,8 +4,8 @@ package ApiProject.RestaurantReservation.exceptions;
  * Date: 01/06/2025
  * Description: CustomExceptionClass to handle reservation conflict exception
  */
-public class ReservationConflitException extends RuntimeException {
-    public ReservationConflitException(String message) {
+public class DataConflitException extends RuntimeException {
+    public DataConflitException(String message) {
         super(message);
     }
 }

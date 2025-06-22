@@ -1,0 +1,27 @@
+
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: restaurant-reservation-api
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-U", "postgres" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build: .
+    ports:
+      - "5026:8080"
+    environment:
+        SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/restaurant-reservation-api
+        SPRING_DATASOURCE_USERNAME: postgres
+        SPRING_DATASOURCE_PASSWORD: postgres
+    depends_on:
+        db:
+          condition: service_healthy

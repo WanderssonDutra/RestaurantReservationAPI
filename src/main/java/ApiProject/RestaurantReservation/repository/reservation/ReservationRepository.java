@@ -1,6 +1,6 @@
 package ApiProject.RestaurantReservation.repository.reservation;
 
-import ApiProject.RestaurantReservation.entity.Reservation;
+import ApiProject.RestaurantReservation.model.Reservation;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -11,8 +11,8 @@ import java.util.UUID;
 
 /**
  * Author: Wandersson Sousa Dutra
- * Date: 01/06/2025
- * Description: repository of the reservation entity
+ * Date: 05/06/2025
+ * Description: repository of the Reservation entity
  */
 public interface ReservationRepository extends JpaRepository<Reservation, UUID> {
 
@@ -32,4 +32,11 @@ public interface ReservationRepository extends JpaRepository<Reservation, UUID> 
                     @Param("tableNumber") int tableNumber,
                     @Param("date")LocalDate date,
                     @Param("time")LocalTime time);
+    @Query("""
+            select r from reservation r
+            where r.restaurantTable.restaurant.id = :restaurantId
+            """)
+    List<Reservation> findByRestaurantId(@Param("restaurantId") UUID restaurantId);
+
+    boolean existsByCode(int code);
 }

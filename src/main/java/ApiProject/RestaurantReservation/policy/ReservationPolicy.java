@@ -8,5 +8,6 @@ import ApiProject.RestaurantReservation.dto.reservation.ReservationResquestDTO;
  * Description: Strategy design pattern interface to decide custom reservation policies
  */
 public interface ReservationPolicy {
+
     void validate(ReservationResquestDTO data);
 }
