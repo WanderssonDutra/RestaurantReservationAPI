@@ -11,7 +11,7 @@
 	<groupId>ApiProject</groupId>
 	<artifactId>RestaurantReservation</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>RestaurantReservation</name>
 	<description>An api to make reservations in a restaurant.</description>
 	<url/>
@@ -69,7 +69,7 @@
 		</dependency>
 	</dependencies>
 	<build>
-		<finalName>restaurant-api</finalName>
+		<finalName>restaurant-reservation-api</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -85,6 +85,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<version>3.2.5</version>
 				<configuration>
+					<includeSystemScope>false</includeSystemScope>
 					<excludes>
 						<exclude>
 							<groupId>org.projectlombok</groupId>
